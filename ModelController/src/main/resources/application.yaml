@@ -1,0 +1,27 @@
+server:
+  port: 7777
+
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+    enabled: true
+
+
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/mydb
+    username: guscjf0903
+    password: tnthtn35
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.hibernate: ERROR
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+

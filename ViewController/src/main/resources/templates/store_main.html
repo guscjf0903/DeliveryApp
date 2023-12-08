@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+</head>
+<body>
+
+<h2>사업자용 화면</h2>
+
+<form th:action="@{/store/main}" th:method="post" th:object="${menu}">
+  <label for="menuname">메뉴이름:</label>
+  <input type="text" id="menuname" name="menuname" th:field="*{menuName}" required>
+  <br>
+
+  <label for="menuprice">메뉴가격:</label>
+  <input type="menuprice" id="menuprice" name="menuprice" th:field="*{menuPrice}" required>
+  <br>
+
+  <label for="menucategory">메뉴 카테고리:</label>
+  <input type="menucategory" id="menucategory" name="menucategory" th:field="*{menuCategory}" required>
+  <br>
+
+  <button type="submit">저장</button>
+</form>
+
+</body>
+</html>
