@@ -2,7 +2,9 @@ package com.example.modelcontroller.service;
 
 import com.example.core.dto.LoginDto;
 import com.example.core.dto.LoginResponse;
+import com.example.modelcontroller.entity.Login;
 import com.example.modelcontroller.entity.User;
+import com.example.modelcontroller.model.LoginRepository;
 import com.example.modelcontroller.model.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserLoginService {
     private final UserRepository userRepository;
+    private final LoginRepository loginRepository;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Transactional
@@ -25,10 +28,11 @@ public class UserLoginService {
             if(!user.getPassword().equals(loginDTO.getPassword())) {
                 throw new Exception();
             }
-            LoginResponse loginResponse = new LoginResponse(user.getUserId());
+            Login login = Login.toEntity(user);
+            loginRepository.save(login);
+            LoginResponse loginResponse = new LoginResponse(login.getLoginId());
 
             return ResponseEntity.ok(loginResponse);
-
         } catch (Exception e) {
             LoginResponse loginResponse = new LoginResponse(null);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(loginResponse);

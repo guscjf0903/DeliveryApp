@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SignupDto {
-    @NotBlank
+    @NotBlank(message = "Please enter a username")
     private String userName;
     private String password;
     @Email(message = "Please enter a valid email address")
