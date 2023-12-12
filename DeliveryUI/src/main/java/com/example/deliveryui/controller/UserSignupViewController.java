@@ -3,6 +3,7 @@ package com.example.deliveryui.controller;
 import com.example.core.dto.SignupDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,11 +24,10 @@ public class UserSignupViewController {
     }
     @PostMapping("/signup")
     public String registerUser(@ModelAttribute SignupDto signupDTO) {
-        HttpStatus signupStatus = restTemplate.postForObject("http://localhost:7777/user/signup", signupDTO, HttpStatus.class);
-        if(signupStatus == HttpStatus.OK) {
+        ResponseEntity<String> signupStatus = restTemplate.postForEntity("http://localhost:7777/user/signup", signupDTO, String.class);
+        if(signupStatus.getStatusCode() == HttpStatus.OK) {
             return "signup_success";
-        }
-        else {
+        } else {
             return "signup_fail";
         }
     }

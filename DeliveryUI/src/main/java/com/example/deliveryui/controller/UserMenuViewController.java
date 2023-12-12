@@ -26,12 +26,11 @@ public class UserMenuViewController {
 
     @PostMapping("/add")
     public String addMenu(@ModelAttribute MenuDto menuDTO) {
-        ResponseEntity menuAddHttpStatus = restTemplate.postForEntity("http://localhost:7777/menu/add", menuDTO, ResponseEntity.class);
+        ResponseEntity<String> menuAddHttpStatus = restTemplate.postForObject("http://localhost:7777/menu/add", menuDTO, ResponseEntity.class);
 
         if(menuAddHttpStatus.getStatusCode() == HttpStatus.OK) {
             return "menuAdd_success";
-        }
-        else {
+        } else {
             return "menuAdd_fail";
         }
     }

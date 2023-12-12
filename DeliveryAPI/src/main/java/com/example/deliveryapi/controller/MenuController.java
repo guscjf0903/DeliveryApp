@@ -18,14 +18,13 @@ public class MenuController {
     private final MenuService menuService;
 
     @PostMapping("/add")
-    public ResponseEntity addMenu(@RequestBody @Valid MenuDto menuDTO) {
-        ResponseEntity menuAddResponse;
+    public ResponseEntity<String> addMenu(@RequestBody @Valid MenuDto menuDTO) {
         try {
-            menuAddResponse = menuService.addMenu(menuDTO);
+            menuService.addMenu(menuDTO);
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-        return menuAddResponse;
     }
 
 }

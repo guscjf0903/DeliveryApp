@@ -7,7 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +20,12 @@ public class UserSignupController {
     private final UserSignupService userSignupService;
 
     @PostMapping("/signup")
-    public HttpStatus registerUser(@RequestBody @Valid SignupDto signupDTO) {
+    public ResponseEntity<String> registerUser(@RequestBody @Valid SignupDto signupDTO) {
         try {
             userSignupService.registerUser(signupDTO);
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
-            return HttpStatus.BAD_REQUEST;
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-        return HttpStatus.OK;
     }
 }
