@@ -8,6 +8,7 @@ import lombok.Getter;
 @Getter
 public class LoginResponse {
     private final Long loginId;
+
     @JsonCreator
     public LoginResponse(@JsonProperty("loginId") Long loginId) {
         this.loginId = loginId;

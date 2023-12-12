@@ -1,10 +1,13 @@
-package com.example.core;
+package com.example.deliveryui;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CoreApplicationTests {
+class ViewControllerApplicationTests {
 
+    @Test
+    void contextLoads() {
+    }
 
 }

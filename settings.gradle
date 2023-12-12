@@ -1,5 +1,5 @@
 rootProject.name = 'BaedalMinjokDB'
-include 'ViewController'
+include 'DeliveryUI'
 include 'Core'
-include 'ModelController'
+include 'DeliveryAPI'
 

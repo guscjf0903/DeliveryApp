@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var loginId = sessionStorage.getItem("loginId");
+
+            document.getElementById("loginId").value = loginId;
+        });
+    </script>
+</head>
+<body>
+
+<form th:action="@{/menu/add}" th:object = "${menuDTO}" method="post">
+    <label>MenuName : </label>
+    <input type="text" name="menuName" th:field="*{menuName}" required /><br>
+
+    <label>MenuPrice:</label><input type="number" name="menuPrice" th:field="*{menuPrice}" required /><br>
+
+    <label>Category:</label><input type="text" name="menuCategory" th:field="*{menuCategory}" required/><br>
+
+    <input type="hidden" id="loginId" name="loginId"/>
+
+    <input type="hidden" id="roles" name="roles" />
+    <button type="submit">ADD</button>
+</form>
+</body>
+</html>
