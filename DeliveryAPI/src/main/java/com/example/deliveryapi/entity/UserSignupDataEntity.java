@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class UserSignupData {
+public class UserSignupDataEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -42,11 +42,11 @@ public class UserSignupData {
     private boolean user;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<MenuAddData> menus;
+    private List<MenuAddDataEntity> menus;
 
 
-    public static UserSignupData toEntity(SignupDto signupDto) {
-        UserSignupData user = new UserSignupData();
+    public static UserSignupDataEntity toEntity(SignupDto signupDto) {
+        UserSignupDataEntity user = new UserSignupDataEntity();
         user.setUserName(signupDto.getUserName());
         user.setPassword(signupDto.getPassword());
         user.setEmail(signupDto.getEmail());

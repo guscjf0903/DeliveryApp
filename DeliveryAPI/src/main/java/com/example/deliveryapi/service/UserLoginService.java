@@ -2,8 +2,8 @@ package com.example.deliveryapi.service;
 
 import com.example.core.dto.LoginDto;
 import com.example.core.dto.LoginResponse;
-import com.example.deliveryapi.entity.LoginData;
-import com.example.deliveryapi.entity.UserSignupData;
+import com.example.deliveryapi.entity.LoginDataEntity;
+import com.example.deliveryapi.entity.UserSignupDataEntity;
 import com.example.deliveryapi.exception.InvalidTokenException;
 import com.example.deliveryapi.exception.PasswordMismatchException;
 import com.example.deliveryapi.model.LoginRepository;
@@ -12,8 +12,6 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,9 +25,9 @@ public class UserLoginService {
     @Transactional
     public Optional<LoginResponse> loginSuccessGenerateToken(LoginDto loginDTO) {
         try {
-            UserSignupData user = validatePasswordAndGetUserData(loginDTO.getUserName(), loginDTO.getPassword());
+            UserSignupDataEntity user = validatePasswordAndGetUserData(loginDTO.getUserName(), loginDTO.getPassword());
 
-            LoginData login = LoginData.toEntity(user);
+            LoginDataEntity login = LoginDataEntity.toEntity(user);
             loginRepository.save(login);
             LoginResponse loginResponse = new LoginResponse(login.getLoginId());
 
@@ -40,8 +38,8 @@ public class UserLoginService {
         }
     }
 
-    private UserSignupData validatePasswordAndGetUserData(String userName, String password) {
-        UserSignupData userSignupData = userRepository.findByUserName(userName);
+    private UserSignupDataEntity validatePasswordAndGetUserData(String userName, String password) {
+        UserSignupDataEntity userSignupData = userRepository.findByUserName(userName);
         if (!userSignupData.getPassword().equals(password)) {
             throw new PasswordMismatchException("miss match password");
         }
@@ -49,7 +47,7 @@ public class UserLoginService {
         return userSignupData;
     }
 
-    public LoginData validateLoginId(int loginId) {
+    public LoginDataEntity validateLoginId(int loginId) {
         return loginRepository.findById(loginId)
                 .orElseThrow(() -> new InvalidTokenException("invalid login id"));
     }

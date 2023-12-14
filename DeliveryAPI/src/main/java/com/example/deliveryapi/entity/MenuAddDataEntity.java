@@ -20,7 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class MenuAddData {
+public class MenuAddDataEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "menu_id")
@@ -28,7 +28,7 @@ public class MenuAddData {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private UserSignupData user;
+    private UserSignupDataEntity user;
 
     @Column(name = "menu_name", nullable = false)
     private String menuName;
@@ -39,8 +39,8 @@ public class MenuAddData {
     @Column(name = "menu_category")
     private String menuCategory;
 
-    public static MenuAddData toEntity(MenuDto menuDto) {
-        MenuAddData menu = new MenuAddData();
+    public static MenuAddDataEntity toEntity(MenuDto menuDto) {
+        MenuAddDataEntity menu = new MenuAddDataEntity();
         menu.setMenuName(menuDto.getMenuName());
         menu.setMenuPrice(menuDto.getMenuPrice());
         menu.setMenuCategory(menuDto.getMenuCategory());

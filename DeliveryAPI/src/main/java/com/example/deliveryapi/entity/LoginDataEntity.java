@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class LoginData {
+public class LoginDataEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "login_id")
@@ -20,10 +20,10 @@ public class LoginData {
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private UserSignupData user;
+    private UserSignupDataEntity user;
 
-    public static LoginData toEntity(UserSignupData user) {
-        LoginData login = new LoginData();
+    public static LoginDataEntity toEntity(UserSignupDataEntity user) {
+        LoginDataEntity login = new LoginDataEntity();
         login.setUser(user);
         return login;
     }
