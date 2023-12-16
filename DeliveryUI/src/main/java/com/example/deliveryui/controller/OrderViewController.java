@@ -20,8 +20,7 @@ public class OrderViewController {
     private final RestTemplate restTemplate = new RestTemplate();
 
     @GetMapping("/add")
-    public String showOrderForm(Model model) {
-        model.addAttribute("orderDTO", new OrderDto());
+    public String showOrderForm() {
         return "html_order";
     }
     @RequestMapping(value = "/add", method = RequestMethod.POST)

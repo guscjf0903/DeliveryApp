@@ -15,8 +15,12 @@ import lombok.Setter;
 public class SignupDto {
     @NotBlank(message = "Please enter a username")
     private String userName;
+
     @Password
+    @NotBlank(message = "Please enter a password")
     private String password;
+
+    @NotBlank(message = "Please enter a name")
     @Email(message = "Please enter a valid email address")
     private String email;
     private String companyName;
