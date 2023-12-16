@@ -1,6 +1,7 @@
 package com.example.deliveryui.controller;
 
 import com.example.core.dto.SignupDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class UserSignupViewController {
         return "signup_form";
     }
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public ResponseEntity<String> registerUser(@RequestBody SignupDto signupDTO) {
+    public ResponseEntity<String> registerUser(@RequestBody @Valid SignupDto signupDTO) {
         ResponseEntity<String> signupStatus = restTemplate.postForEntity("http://localhost:7777/user/signup", signupDTO, String.class);
 
         return signupStatus;

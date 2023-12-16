@@ -18,7 +18,7 @@ public class MenuController {
     private final MenuService menuService;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addMenu(@RequestBody @Valid MenuDto menuDTO) {
+    public ResponseEntity<String> addMenu(@RequestBody MenuDto menuDTO) {
         try {
             menuService.addMenu(menuDTO);
             return ResponseEntity.ok().build();

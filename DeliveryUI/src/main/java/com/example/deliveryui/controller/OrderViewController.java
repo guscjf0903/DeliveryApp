@@ -1,6 +1,7 @@
 package com.example.deliveryui.controller;
 
 import com.example.core.dto.OrderDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

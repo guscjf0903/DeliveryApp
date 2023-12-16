@@ -20,7 +20,7 @@ public class UserSignupController {
     private final UserSignupService userSignupService;
 
     @PostMapping("/signup")
-    public ResponseEntity<String> registerUser(@RequestBody @Valid SignupDto signupDTO) {
+    public ResponseEntity<String> registerUser(@RequestBody SignupDto signupDTO) {
         try {
             userSignupService.registerUser(signupDTO);
             return ResponseEntity.ok().build();
