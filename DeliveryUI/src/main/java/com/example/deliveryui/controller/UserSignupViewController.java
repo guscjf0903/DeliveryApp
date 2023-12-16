@@ -25,11 +25,8 @@ public class UserSignupViewController {
     @PostMapping("/signup")
     public String registerUser(@ModelAttribute SignupDto signupDTO) {
         ResponseEntity<String> signupStatus = restTemplate.postForEntity("http://localhost:7777/user/signup", signupDTO, String.class);
-        if(signupStatus.getStatusCode() == HttpStatus.OK) {
-            return "signup_success";
-        } else {
-            return "signup_fail";
-        }
+
+        return signupStatus;
     }
 
 
