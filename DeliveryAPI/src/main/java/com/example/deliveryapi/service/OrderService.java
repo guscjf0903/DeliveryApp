@@ -34,10 +34,10 @@ public class OrderService {
     public void addOrder(OrderDto orderDTO) {
         try {
             LoginDataEntity login = userLoginService.validateLoginId(orderDTO.getLoginId());
-            userSignupService.checkUserPermission(login);
-            UserSignupDataEntity storeData = storeNameCheck(orderDTO);
-            HashMap<Long, Integer> menuMap = storeMenuCheck(orderDTO, storeData);
-            OrderDataEntity orderDataEntity = saveOrder(login.getUser(), storeData, menuMap);
+            userSignupService.checkUserPermission(login); // user인지 확인
+            UserSignupDataEntity storeData = storeNameCheck(orderDTO); // store 이름 확인 후 storeData 저장
+            HashMap<Long, Integer> menuMap = storeMenuCheck(orderDTO, storeData); // menu 이름 확인 후 menuMap에 갯수와 함께 저장
+            OrderDataEntity orderDataEntity = saveOrder(login.getUser(), storeData, menuMap); // order 저장
 
             orderDetailService.addOrderDetail(orderDataEntity, menuMap); // orderDetail관련 로직은 orderDetailService에서 처리
         } catch (Exception e) {
