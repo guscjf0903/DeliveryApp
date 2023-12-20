@@ -44,18 +44,20 @@ public class UserSignupDataEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<MenuAddDataEntity> menus;
 
+    public UserSignupDataEntity(String userName, String password, String email, String companyName, String address, boolean store, boolean user) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.companyName = companyName;
+        this.address = address;
+        this.store = store;
+        this.user = user;
+    }
 
-    public static UserSignupDataEntity toEntity(SignupDto signupDto) {
-        UserSignupDataEntity user = new UserSignupDataEntity();
-        user.setUserName(signupDto.getUserName());
-        user.setPassword(signupDto.getPassword());
-        user.setEmail(signupDto.getEmail());
-        user.setCompanyName(signupDto.getCompanyName());
-        user.setAddress(signupDto.getAddress());
-        user.setStore(signupDto.isStore());
-        user.setUser(signupDto.isUser());
+    public static UserSignupDataEntity of(SignupDto signupDto) {
 
-        return user;
+        return new UserSignupDataEntity(signupDto.getUserName(), signupDto.getPassword(), signupDto.getEmail(),
+                signupDto.getCompanyName(), signupDto.getAddress(), signupDto.isStore(), signupDto.isUser());
     }
 
 

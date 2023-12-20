@@ -27,7 +27,7 @@ public class UserLoginService {
         try {
             UserSignupDataEntity user = validatePasswordAndGetUserData(loginDTO.getUserName(), loginDTO.getPassword());
 
-            LoginDataEntity login = LoginDataEntity.toEntity(user);
+            LoginDataEntity login = LoginDataEntity.of(user);
             loginRepository.save(login);
             LoginResponse loginResponse = new LoginResponse(login.getLoginId());
 

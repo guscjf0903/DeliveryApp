@@ -35,7 +35,7 @@ public class MenuService {
 
 
     private void saveMenu(MenuDto menuDto, UserSignupDataEntity user) {
-        MenuAddDataEntity menu = MenuAddDataEntity.toEntity(menuDto);
+        MenuAddDataEntity menu = MenuAddDataEntity.of(menuDto);
         menu.setUser(user);
         user.getMenus().add(menu);
         menuRepository.save(menu);

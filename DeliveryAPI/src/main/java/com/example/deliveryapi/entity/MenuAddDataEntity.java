@@ -39,12 +39,14 @@ public class MenuAddDataEntity {
     @Column(name = "menu_category")
     private String menuCategory;
 
-    public static MenuAddDataEntity toEntity(MenuDto menuDto) {
-        MenuAddDataEntity menu = new MenuAddDataEntity();
-        menu.setMenuName(menuDto.getMenuName());
-        menu.setMenuPrice(menuDto.getMenuPrice());
-        menu.setMenuCategory(menuDto.getMenuCategory());
-        return menu;
+    public MenuAddDataEntity(String menuName, int menuPrice, String menuCategory) {
+        this.menuName = menuName;
+        this.menuPrice = menuPrice;
+        this.menuCategory = menuCategory;
+    }
+
+    public static MenuAddDataEntity of(MenuDto menuDto) {
+        return new MenuAddDataEntity(menuDto.getMenuName(), menuDto.getMenuPrice(), menuDto.getMenuCategory());
     }
 
 

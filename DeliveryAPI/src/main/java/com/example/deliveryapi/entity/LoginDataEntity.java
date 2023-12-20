@@ -22,10 +22,12 @@ public class LoginDataEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserSignupDataEntity user;
 
-    public static LoginDataEntity toEntity(UserSignupDataEntity user) {
-        LoginDataEntity login = new LoginDataEntity();
-        login.setUser(user);
-        return login;
+    public LoginDataEntity(UserSignupDataEntity user) {
+        this.user = user;
+    }
+
+    public static LoginDataEntity of(UserSignupDataEntity user) {
+        return new LoginDataEntity(user);
     }
 
 }

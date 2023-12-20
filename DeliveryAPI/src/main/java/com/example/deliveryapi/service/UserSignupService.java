@@ -1,6 +1,5 @@
 package com.example.deliveryapi.service;
 
-import static com.example.deliveryapi.entity.UserSignupDataEntity.toEntity;
 
 import com.example.core.dto.*;
 import com.example.deliveryapi.entity.LoginDataEntity;
@@ -23,7 +22,7 @@ public class UserSignupService {
     @Transactional
     public void registerUser(SignupDto signupDTO) {
         try{
-            UserSignupDataEntity user = toEntity(signupDTO);
+            UserSignupDataEntity user = UserSignupDataEntity.of(signupDTO);
             userRepository.save(user);
         } catch (Exception e) {
             logger.error(e.getMessage());
