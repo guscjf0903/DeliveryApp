@@ -40,4 +40,11 @@ public class OrderDetailDataEntity {
 
     @Column(name = "menu_price", nullable = false)
     private int menuPrice;
+
+    public OrderDetailDataEntity(OrderDataEntity order,MenuAddDataEntity menuId, int quantity, int menuPrice) {
+        this.order = order;
+        this.menuId = menuId;
+        this.quantity = quantity;
+        this.menuPrice = menuPrice;
+    }
 }

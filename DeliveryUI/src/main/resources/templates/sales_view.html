@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var loginId = sessionStorage.getItem("loginId");
+
+            document.getElementById("loginId").value = loginId;
+        });
+
+        function salesCheck() {
+            var checkStore = document.querySelector('#checkStore').checked;
+            var checkUser = document.querySelector('#checkUser').checked;
+            var salesMonth = document.querySelector('#salesMonth').value;
+            var loginId = document.querySelector('#loginId').value;
+
+            var data = {
+                checkStore: checkStore,
+                checkUser: checkUser,
+                salesMonth: salesMonth,
+                loginId: loginId,
+            };
+
+            fetch('/sales/view/total', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        alert('매출이 확인되었습니다.');
+                    } else {
+                        alert('매출 확인에 실패하였습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.error('request failed', error);
+                    alert('매출 확인에 실패하였습니다.')
+                });
+
+            return false;
+        }
+    </script>
+</head>
+<body>
+<form id="SalesAddForm" onsubmit="return salesCheck()">
+    <label>확인하고 싶은 매출을 선택해주세요</label><br>
+    <input type="radio" id="checkStore" name="Auth" required>매장
+    <input type="radio" id="checkUser" name="Auth" required>유저<br><br>
+
+    <label for="salesMonth">확인하고 싶은 월 :</label>
+    <input type="number" id="salesMonth" min="1" max="12" required/><br>
+
+    <input type="hidden" id="loginId" name="loginId"/>
+    <button type="submit">확인</button>
+
+</form>
+
+</body>
+</html>

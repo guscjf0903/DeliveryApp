@@ -11,6 +11,7 @@ import com.example.deliveryapi.exception.OrderFailedException;
 import com.example.deliveryapi.model.MenuRepository;
 import com.example.deliveryapi.model.OrderRepository;
 import com.example.deliveryapi.model.UserRepository;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import org.slf4j.Logger;
@@ -28,6 +29,7 @@ public class OrderService {
     private final MenuRepository menuRepository;
     private final OrderRepository orderRepository;
     private final OrderDetailService orderDetailService;
+    private final SalesService salesService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Transactional
@@ -40,6 +42,7 @@ public class OrderService {
             OrderDataEntity orderDataEntity = saveOrder(login.getUser(), storeData, menuMap); // order 저장
 
             orderDetailService.addOrderDetail(orderDataEntity, menuMap); // orderDetail관련 로직은 orderDetailService에서 처리
+            salesService.setSales(orderDataEntity); // sales 저장
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw new OrderFailedException("menu add failed");
@@ -54,6 +57,7 @@ public class OrderService {
             order.setStore(store);
             int totalPrice = menuTotalPrice(menuMap);
             order.setTotalPrice(totalPrice);
+            order.setOrderDate(LocalDateTime.now()); // testing
 
             return orderRepository.save(order);
         } catch (Exception e) {

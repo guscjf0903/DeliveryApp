@@ -34,14 +34,9 @@ public class OrderDetailService {
     private void setOrderDetail(OrderDataEntity orderDataEntity, HashMap<Long, Integer> menuMap) {
         try {
             for (Long menuId : menuMap.keySet()) {
-                OrderDetailDataEntity orderDetail = new OrderDetailDataEntity();
-                orderDetail.setOrder(orderDataEntity);
-
                 MenuAddDataEntity menu = menuRepository.findByMenuId(menuId);
-                orderDetail.setMenuId(menu);
 
-                orderDetail.setQuantity(menuMap.get(menuId));
-                orderDetail.setMenuPrice(menu.getMenuPrice());
+                OrderDetailDataEntity orderDetail = new OrderDetailDataEntity(orderDataEntity, menu, menuMap.get(menuId), menu.getMenuPrice());
                 orderDetailRepository.save(orderDetail);
 
                 orderDataEntity.getOrderDetail().add(orderDetail); // orderDetail을 order에 넣어줌

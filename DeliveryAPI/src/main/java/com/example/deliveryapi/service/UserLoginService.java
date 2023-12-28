@@ -47,6 +47,7 @@ public class UserLoginService {
         return userSignupData;
     }
 
+    @Transactional(readOnly = true)
     public LoginDataEntity validateLoginId(int loginId) {
         return loginRepository.findById(loginId)
                 .orElseThrow(() -> new InvalidTokenException("invalid login id"));
