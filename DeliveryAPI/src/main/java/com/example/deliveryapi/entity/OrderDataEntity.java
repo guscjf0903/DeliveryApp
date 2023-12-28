@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Table(name = "orders", schema = "delivery_schema")
@@ -36,6 +37,10 @@ public class OrderDataEntity {
     @ManyToOne
     @JoinColumn(name = "store_id", nullable = false)
     private UserSignupDataEntity store;
+
+    @Column(name = "order_datetime")
+    @CreatedDate
+    private String orderDatetime;
 
     @Column(name = "total_price")
     private int totalPrice;
