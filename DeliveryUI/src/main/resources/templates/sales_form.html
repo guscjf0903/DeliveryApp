@@ -3,18 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <title>sales</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var loginId = sessionStorage.getItem("loginId");
+
+            document.getElementById("loginId").value = loginId;
+        });
+
+        function saleMonth() {
+            var checkStore = document.getElementById('checkStore').checked;
+            var checkUser = document.getElementById('checkUser').checked;
+            var startDate = document.getElementById('startDate').value;
+            var endDate = document.getElementById('endDate').value;
+
+            var date = {
+                isStore : checkStore,
+                isUser : checkUser,
+                startDate : startDate,
+                endDate : endDate,
+                loginId: parseInt(document.getElementById('loginId').value),
+            }
+
+            fetch('/sales/date', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(date),
+            })
+                .then(response => response.json())  // 항상 JSON 데이터를 반환하도록 변경
+                .then(data => {
+                    const salesDisplayElement = document.getElementById('salesDisplay');
+                    if(data.error) {
+                        salesDisplayElement.innerHTML = `<p style="color: red;">매출 확인에 실패하였습니다. 오류 메시지: ${data.error}</p>`;
+                    } else {
+                        const salesTotal = data.salesTotal;
+                        const startDateText = getMonthText(date.startDate);
+                        const endDateText = (date.startDate !== date.endDate) ? getMonthText(date.endDate) : '';
+
+                        salesDisplayElement.innerHTML = `${startDateText} ~ ${endDateText} 매출 금액 : ${salesTotal}원`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+            // 폼이 제출되면 페이지가 새로고침되는 것을 방지
+            return false;
+        }
+
+        function getMonthText(dateString) {
+            const date = new Date(dateString);
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 패딩
+            const day = date.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+    </script>
 </head>
 <body>
-<form id="salesForm" onsubmit="return sendSales()">
-    <lable for="isStore">매장</lable>
-    <input type="radio" id="isStore" name="isStore" value="true" checked>
-    <lable for="isUser">유저</lable>
-    <input type="radio" id="isUser" name="isStore" value="false">
-    <>
+<form id="salesForm" onsubmit="return saleMonth()">
+    <label>확인하고 싶은 매출을 선택해주세요</label><br>
+    <input type="radio" id="checkStore" name="userType" checked>매장
+    <input type="radio" id="checkUser" name="userType">유저<br><br>
+
+    <label> 시작날짜를 입력해주세요</label>>
+    <input type="date" id="startDate" name="startDate" required><br><br>
+    <label> 끝날짜를 입력해주세요</label>>
+    <input type="date" id="endDate" name="endDate" required><br><br>
 
     <input type="hidden" id="loginId" name="loginId">
 
+    <div id="salesDisplay"></div>
 
+    <button type="button" onclick=saleMonth()>확인</button>
 
 </form>
 

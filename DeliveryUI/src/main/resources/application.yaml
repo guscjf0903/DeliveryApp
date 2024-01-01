@@ -1,9 +1,38 @@
 server:
   port: 8888
-
 spring:
+  profiles:
+    group:
+      default: profile1
+      mac: profile1
+      linux: profile2
+
+---
+spring:
+  config:
+    activate:
+      on-profile: profile1
+
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
     cache: false
     enabled: true
+
+api:
+  url: http://localhost:7777
+---
+spring:
+  config:
+    activate:
+      on-profile: profile2
+
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+    enabled: true
+
+api:
+  url: http://172.16.72.130:7777
+

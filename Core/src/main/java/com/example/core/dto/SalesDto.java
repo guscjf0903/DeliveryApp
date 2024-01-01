@@ -11,8 +11,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SalesDto {
-    private boolean isStore;
-    private boolean isUser;
+    private String isStore;
+    private String isUser;
     private LocalDate startDate;
     private LocalDate endDate;
+    private int loginId;
+
 }

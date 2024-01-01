@@ -2,6 +2,7 @@ package com.example.deliveryui.controller;
 
 import com.example.core.dto.MenuDto;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -27,8 +28,8 @@ public class UserMenuViewController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<String> addMenu(@RequestBody @Valid MenuDto menuDTO) {
-        ResponseEntity<String> menuAddHttpStatus = restTemplate.postForEntity("http://localhost:7777/menu/add", menuDTO, String.class);
+    public ResponseEntity<String> addMenu(@RequestBody @Valid MenuDto menuDTO, @Value("${api.url}") String url) {
+        ResponseEntity<String> menuAddHttpStatus = restTemplate.postForEntity( url + "/menu/add", menuDTO, String.class);
 
         return menuAddHttpStatus;
     }

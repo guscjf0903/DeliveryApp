@@ -3,6 +3,7 @@ package com.example.deliveryui.controller;
 import com.example.core.dto.OrderDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,8 +26,8 @@ public class OrderViewController {
         return "html_order";
     }
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<String> addOrder(@RequestBody OrderDto orderDTO) {
-        ResponseEntity<String> orderAddStatus = restTemplate.postForEntity("http://localhost:7777/order/add", orderDTO, String.class);
+    public ResponseEntity<String> addOrder(@RequestBody @Valid OrderDto orderDTO, @Value("${api.url}") String url) {
+        ResponseEntity<String> orderAddStatus = restTemplate.postForEntity(url + "/order/add", orderDTO, String.class);
 
         return orderAddStatus;
     }

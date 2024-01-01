@@ -15,5 +15,5 @@ public class MenuDto {
     private String menuName;
     private int menuPrice;
     private String menuCategory;
-    private int LoginId;
+    private int loginId;
 }
