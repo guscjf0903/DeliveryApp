@@ -27,7 +27,11 @@ public class UserLoginService {
         try {
             UserSignupDataEntity user = validatePasswordAndGetUserData(loginDTO.getUserName(), loginDTO.getPassword());
 
+
             LoginDataEntity login = LoginDataEntity.of(user);
+            if(loginRepository.existsByUserUserId(login.getUser().getUserId())) { // userId가 존재하면 삭제
+                loginRepository.deleteByuserUserId(login.getUser().getUserId());
+            }
             loginRepository.save(login);
             LoginResponse loginResponse = new LoginResponse(login.getLoginId());
 

@@ -13,11 +13,6 @@ spring:
     activate:
       on-profile: profile1
 
-  thymeleaf:
-    prefix: classpath:/templates/
-    suffix: .html
-    cache: false
-    enabled: true
 
 api:
   url: http://localhost:7777
@@ -27,11 +22,6 @@ spring:
     activate:
       on-profile: profile2
 
-  thymeleaf:
-    prefix: classpath:/templates/
-    suffix: .html
-    cache: false
-    enabled: true
 
 api:
   url: http://172.16.72.130:7777

@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LoginRepository extends JpaRepository<LoginDataEntity, Integer> {
+    boolean existsByUserUserId(long loginId);
+
+    void deleteByuserUserId(long loginId);
 }

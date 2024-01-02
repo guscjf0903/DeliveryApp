@@ -4,10 +4,16 @@
     <meta charset="UTF-8">
     <title>주문 정보 전송</title>
     <script>
+        window.onload = function () {
+            let button = document.querySelector('button');
+            console.log(button);
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             var loginId = sessionStorage.getItem("loginId");
             document.getElementById("loginId").value = loginId;
         });
+
         function addMenuField() {
             // Create new menu and quantity input fields
             const menuField = document.createElement('input');
@@ -73,6 +79,7 @@
             return false;
         }
     </script>
+
 </head>
 <body>
 <form id="orderForm" onsubmit="return sendOrder()">
@@ -86,6 +93,7 @@
 
     <input type="submit" value="주문하기">
     <button type="button" onclick="addMenuField()">메뉴 추가</button><br>
+
 </form>
 </body>
 </html>

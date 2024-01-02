@@ -31,4 +31,11 @@ public class OrderViewController {
 
         return orderAddStatus;
     }
+
+    @RequestMapping(value = "/store/list", method = RequestMethod.GET)
+    public ResponseEntity<String> addOrder(@Value("${api.url}") String url) {
+        ResponseEntity<String> StoreList = restTemplate.getForEntity(url + "/user/store/list", String.class);
+
+        return StoreList;
+    }
 }
