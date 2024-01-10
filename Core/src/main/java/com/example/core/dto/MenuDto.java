@@ -1,6 +1,9 @@
 package com.example.core.dto;
 
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +16,9 @@ import lombok.Setter;
 public class MenuDto {
     @NotBlank(message = "메뉴 이름을 입력해주세요.")
     private String menuName;
-    private int menuPrice;
+    @Digits(integer = 10, fraction = 0, message = "숫자만 입력해주세요.")
+    private BigDecimal menuPrice;
+
     private String menuCategory;
-    private int loginId;
+    private Long loginId;
 }

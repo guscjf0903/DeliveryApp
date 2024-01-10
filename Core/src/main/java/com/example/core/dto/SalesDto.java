@@ -1,6 +1,7 @@
 package com.example.core.dto;
 
 import java.time.LocalDate;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,10 +12,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SalesDto {
-    private String isStore;
-    private String isUser;
+    private boolean isStore;
+    private boolean isUser;
+
     private LocalDate startDate;
     private LocalDate endDate;
-    private int loginId;
-
+    private Long loginId;
 }

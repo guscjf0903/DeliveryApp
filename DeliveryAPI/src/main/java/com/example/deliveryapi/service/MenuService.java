@@ -1,10 +1,12 @@
 package com.example.deliveryapi.service;
 
+import static com.example.deliveryapi.exception.ErrorCode.MENU_ADD_FAILED;
+
 import com.example.core.dto.MenuDto;
 import com.example.deliveryapi.entity.LoginDataEntity;
 import com.example.deliveryapi.entity.MenuAddDataEntity;
 import com.example.deliveryapi.entity.UserSignupDataEntity;
-import com.example.deliveryapi.exception.MenuAddFailedException;
+import com.example.deliveryapi.exception.CustomException;
 import com.example.deliveryapi.model.MenuRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -29,7 +31,7 @@ public class MenuService {
             saveMenu(menuDto, login.getUser());
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw new MenuAddFailedException("menu add failed", e);
+            throw new CustomException(MENU_ADD_FAILED);
         }
     }
 

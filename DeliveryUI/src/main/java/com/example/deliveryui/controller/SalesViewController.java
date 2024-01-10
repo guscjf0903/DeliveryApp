@@ -1,6 +1,7 @@
 package com.example.deliveryui.controller;
 
 import com.example.core.dto.SalesDto;
+import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +20,17 @@ public class SalesViewController {
 
     @GetMapping("/view")
     public String showSalesForm() {
-        return "sales_form";
+        return "html/sales_form";
     }
 
     @RequestMapping(value = "/date", method = RequestMethod.POST)
-    public ResponseEntity<String> getSalesByDate(@RequestBody SalesDto salesDTO, @Value("${api.url}") String url) {
-        ResponseEntity<String> salesByDate = restTemplate.postForEntity(url + "/sales/date", salesDTO,String.class);
-        System.out.println(salesByDate.getBody());
-        return salesByDate;
+    public ResponseEntity<Object> getSalesByDate(@RequestBody SalesDto salesDTO, @Value("${api.url}") String url) {
+        try {
+            ResponseEntity<Object> salesByDate = restTemplate.postForEntity(url + "/sales/date", salesDTO, Object.class);
+            return salesByDate;
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", "매출 확인에 실패했습니다." + e.getMessage()));
+        }
+
     }
 }

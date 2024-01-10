@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LoginRepository extends JpaRepository<LoginDataEntity, Integer> {
+public interface LoginRepository extends JpaRepository<LoginDataEntity, Long> {
     boolean existsByUserUserId(long loginId);
 
     void deleteByuserUserId(long loginId);

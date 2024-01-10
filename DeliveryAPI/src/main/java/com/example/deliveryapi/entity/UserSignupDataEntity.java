@@ -57,7 +57,7 @@ public class UserSignupDataEntity {
     public static UserSignupDataEntity of(SignupDto signupDto) {
 
         return new UserSignupDataEntity(signupDto.getUserName(), signupDto.getPassword(), signupDto.getEmail(),
-                signupDto.getCompanyName(), signupDto.getAddress(), signupDto.isStore(), signupDto.isUser());
+                signupDto.getCompanyName(), signupDto.getAddress(), signupDto.getStore(), signupDto.getUser());
     }
 
 

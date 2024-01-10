@@ -10,6 +10,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,5 +40,5 @@ public class OrderDetailDataEntity {
     private int quantity;
 
     @Column(name = "menu_price", nullable = false)
-    private int menuPrice;
+    private BigDecimal menuPrice;
 }

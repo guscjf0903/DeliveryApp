@@ -3,11 +3,6 @@ window.onload = function () {
     console.log(button);
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    var loginId = sessionStorage.getItem("loginId");
-    document.getElementById("loginId").value = loginId;
-});
-
 function addMenuField() {
     // Create new menu and quantity input fields
     const menuField = document.createElement('input');

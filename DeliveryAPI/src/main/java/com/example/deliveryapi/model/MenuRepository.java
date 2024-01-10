@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MenuRepository extends JpaRepository<MenuAddDataEntity, Integer> {
+public interface MenuRepository extends JpaRepository<MenuAddDataEntity, Long> {
     public MenuAddDataEntity findByMenuId(Long menuId);
 
 }

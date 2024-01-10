@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,13 +34,13 @@ public class MenuAddDataEntity {
     @Column(name = "menu_name", nullable = false)
     private String menuName;
 
-    @Column(name = "menu_price", nullable = false)
-    private int menuPrice;
+    @Column(name = "menu_price", nullable = false, precision = 10, scale = 0)
+    private BigDecimal menuPrice;
 
     @Column(name = "menu_category")
     private String menuCategory;
 
-    public MenuAddDataEntity(String menuName, int menuPrice, String menuCategory) {
+    public MenuAddDataEntity(String menuName, BigDecimal menuPrice, String menuCategory) {
         this.menuName = menuName;
         this.menuPrice = menuPrice;
         this.menuCategory = menuCategory;

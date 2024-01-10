@@ -3,7 +3,6 @@ package com.example.deliveryui.controller;
 import com.example.core.dto.LoginDto;
 import com.example.core.dto.LoginResponse;
 import jakarta.validation.Valid;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +24,7 @@ public class UserLoginViewController {
 
     @GetMapping("/login")
     public String showLoginForm() {
-        return "login_form";
+        return "html/login_form";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)

@@ -15,7 +15,7 @@ import lombok.Setter;
 public class OrderDto {
     private String storeName;
     private List<MenuOrderDTO> menuOrders;
-    private int LoginId;
+    private Long LoginId;
 
     @Getter
     @Setter

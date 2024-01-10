@@ -1,0 +1,15 @@
+#spring:
+#  config:
+#    activate:
+#      on-profile: local
+#  logging:
+#    config: classpath:logconfig/logback-spring.xml
+#
+#---
+#spring:
+#  config:
+#    activate:
+#      on-profile: dev
+#  logging:
+#    config: classpath:logconfig/logback-spring.xml
+#

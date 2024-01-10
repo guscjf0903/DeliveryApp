@@ -1,16 +1,15 @@
 package com.example.deliveryapi.service;
 
 
+import static com.example.deliveryapi.exception.ErrorCode.NOT_FOUND_USERORSTORE_TOKEN;
+import static com.example.deliveryapi.exception.ErrorCode.USERSIGNUP_FAILED;
+
 import com.example.core.dto.*;
 import com.example.deliveryapi.entity.LoginDataEntity;
 import com.example.deliveryapi.entity.UserSignupDataEntity;
-import com.example.deliveryapi.exception.InvalidTokenException;
-import com.example.deliveryapi.exception.UserRegistrationException;
+import com.example.deliveryapi.exception.CustomException;
 import com.example.deliveryapi.model.UserRepository;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserSignupService {
     private final UserRepository userRepository;
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Transactional
     public void registerUser(SignupDto signupDTO) {
@@ -26,19 +24,18 @@ public class UserSignupService {
             UserSignupDataEntity user = UserSignupDataEntity.of(signupDTO);
             userRepository.save(user);
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            throw new UserRegistrationException("user registration failed", e);
+            throw new CustomException(USERSIGNUP_FAILED);
         }
     }
     public void checkStorePermission(LoginDataEntity login) {
-        if (!login.getUser().isStore()) {
-            throw new InvalidTokenException("no permission");
+        if (!login.getUser().getStore()) {
+            throw new CustomException(NOT_FOUND_USERORSTORE_TOKEN);
         }
     }
 
     public void checkUserPermission(LoginDataEntity login) {
-        if (!login.getUser().isUser()) {
-            throw new InvalidTokenException("no permission");
+        if (!login.getUser().getUser()) {
+            throw new CustomException(NOT_FOUND_USERORSTORE_TOKEN);
         }
     }
 

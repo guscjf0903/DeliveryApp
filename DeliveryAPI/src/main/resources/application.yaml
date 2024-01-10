@@ -1,52 +1,12 @@
+server:
+  port: 7777
+---
 spring:
   profiles:
     group:
-      default: profile1
-      mac: profile1
-      linux: profile2
-
----
-spring:
-  config:
-    activate:
-      on-profile: common
-
-common:
-  logging:
-    level:
-      org.springframework.web: DEBUG
-      org.hibernate: ERROR
-    pattern:
-      console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
-
----
-server:
-  port: 7777
-spring:
-  config:
-    activate:
-      on-profile: profile1
-  datasource:
-    driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/mydb
-    username: guscjf0903
-    password: tnthtn35
-  jpa:
-    hibernate:
-      ddl-auto: none
-
----
-server:
-  port: 7777
-spring:
-  config:
-    activate:
-      on-profile: profile2
-  datasource:
-    driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://172.16.72.131:5432/delivery_db
-    username: guscjf0903
-    password: tnthtn35
-  jpa:
-    hibernate:
-      ddl-auto: none
+      local:
+        - db-local
+      dev:
+        - db-dev
+    include:
+      - db
