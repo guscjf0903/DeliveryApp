@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>메뉴 수정</title>
+</head>
+<body>
+<h1> Menu </h1>
+<div id = "menuList"></div>
+
+    <h2>Edit Menu</h2>
+    <form id="editMenuForm">
+        <label>Selected Menu</label>
+        <select class="form-select" id="selectedMenu" required></select>
+
+        <button type="button" onclick="editSelectedMenu()">편집</button>
+        <button type="button" onclick="deleteSelectedMenu()">삭제</button>
+    </form>
+<script   src="https://code.jquery.com/jquery-3.7.1.min.js"   integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="   crossorigin="anonymous"></script>
+<script src = "/js/editMenu.js"></script>
+</body>
+</html>

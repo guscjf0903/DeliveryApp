@@ -20,7 +20,9 @@ public enum ErrorCode {
 
     PASSWORD_DISMATCH(400,"비밀번호가 일치하지 않습니다."),
 
-    USERSIGNUP_FAILED(400,"회원가입에 실패하였습니다.");
+    USERSIGNUP_FAILED(400,"회원가입에 실패하였습니다."),
+    MENU_LIST_FETCH_FAILED(400,"메뉴 리스트 데이터를 가져오는 중에 실패하였습니다."),
+    MENU_DELETE_FAILED(400,"메뉴 삭제에 실패하였습니다.");
 
 
 

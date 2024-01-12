@@ -14,6 +14,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "menus", schema = "delivery_schema")
@@ -21,6 +23,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
+@SQLDelete(sql = "UPDATE menus SET deleted = true WHERE menu_id = ?")
+@Where(clause = "deleted = false")
 public class MenuAddDataEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +43,9 @@ public class MenuAddDataEntity {
 
     @Column(name = "menu_category")
     private String menuCategory;
+
+    @Column(name = "deleted")
+    private Boolean deleted;
 
     public MenuAddDataEntity(String menuName, BigDecimal menuPrice, String menuCategory) {
         this.menuName = menuName;
