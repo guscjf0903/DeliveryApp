@@ -11,20 +11,33 @@
     <input type="radio" id="isUser" name="isType">유저<br><br>
 
     <label> 시작날짜를 입력해주세요</label>
-    <input type="date" id="startDate" name="startDate" required><br><br>
+    <input type="date" id="startDate" name="startDate" required><br>
     <label> 끝날짜를 입력해주세요</label>
-    <input type="date" id="endDate" name="endDate" required><br><br>
+    <input type="date" id="endDate" name="endDate" required><br>
 
-    <input type="hidden" id="loginId" name="loginId">
+    <input type="hidden" id="loginId1" name="loginId1"/>
+    <div id="salesDateDisplay"></div>
 
-    <div id="salesDisplay"></div>
 
-    <button type="button" onclick=saleMonth()>확인</button>
-    <script src = "/js/send_loginId.js"></script>
+    <button type="button" onclick=saleMonth()>확인</button><br><br>
     <script src = "/js/get_SalesData.js"></script>
+</form>
+<hr>
+<form id = "salesTimeForm" onsubmit="return saleTime()">
+    <label> 확인하고 싶은 날짜를 선택해주세요 </label><br>
+    <input type="date" id="fixDate" name="fixDate" required><br><br>
+    <label> 확인하고 싶은 시간대를 선택해주세요 </label><br>
+    <input type="radio" id="lunch" name="isType" required>점심(오전10시 ~ 오후2시)<br>
+    <input type="radio" id="dinner" name="isType" required>저녁(오후4시 ~ 오후8시)<br><br>
+
+    <button type="button" onclick=saleTime()>확인</button>
+    <input type="hidden" id="loginId2" name="loginId2"/>
+    <div id = "salesTimeDisplay"></div>
 
 
 </form>
+<script   src="https://code.jquery.com/jquery-3.7.1.min.js"   integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="   crossorigin="anonymous"></script>
+<script src = "/js/getSalesTime.js"></script>
 
 </body>
 </html>

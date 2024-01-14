@@ -13,6 +13,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -45,7 +46,7 @@ public class OrderDataEntity {
 
     @Column(name = "order_datetime")
     @CreatedDate
-    private LocalDate orderDatetime;
+    private LocalDateTime orderDatetime;
 
     @Column(name = "total_price")
     private BigDecimal totalPrice;

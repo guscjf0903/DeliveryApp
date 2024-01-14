@@ -45,7 +45,7 @@ public class MenuAddDataEntity {
     private String menuCategory;
 
     @Column(name = "deleted")
-    private Boolean deleted;
+    private Boolean deleted = false;
 
     public MenuAddDataEntity(String menuName, BigDecimal menuPrice, String menuCategory) {
         this.menuName = menuName;
@@ -56,6 +56,4 @@ public class MenuAddDataEntity {
     public static MenuAddDataEntity of(MenuDto menuDto) {
         return new MenuAddDataEntity(menuDto.getMenuName(), menuDto.getMenuPrice(), menuDto.getMenuCategory());
     }
-
-
 }

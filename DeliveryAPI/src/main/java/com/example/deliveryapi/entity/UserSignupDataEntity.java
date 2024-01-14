@@ -2,6 +2,7 @@ package com.example.deliveryapi.entity;
 
 import com.example.core.dto.SignupDto;
 import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,7 +42,7 @@ public class UserSignupDataEntity {
     @Column(name = "user_role")
     private boolean user;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
     private List<MenuAddDataEntity> menus;
 
     public UserSignupDataEntity(String userName, String password, String email, String companyName, String address, boolean store, boolean user) {

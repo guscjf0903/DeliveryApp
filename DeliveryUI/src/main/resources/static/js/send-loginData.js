@@ -34,3 +34,7 @@ function SendLogin() {
 
     return false;
 }
+
+function saveLoginIdToSessionStorage(loginId) {
+    sessionStorage.setItem("loginId", loginId);
+}

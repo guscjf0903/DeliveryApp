@@ -5,8 +5,10 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
+
 public enum ErrorCode {
-    TOTAL_FETCH_FAILED(400,"매출 총합 데이터를 가져오는 중에 실패하였습니다."),
+    TOTALSALE_FETCH_FAILED(400,"매출 총합 데이터를 가져오는 중에 실패하였습니다."),
+    TOTALSALETIME_FETCH_FAILED(400,"매출 총합 데이터를 가져오는 중에 실패하였습니다."),
     UNAUTHORIZED_ACCESS(400,"접근 권한이 없습니다."),
     NOT_FOUND_USERORSTORE_TOKEN(401,"토큰이 존재하지 않습니다."),
     MENU_ADD_FAILED(400,"메뉴 추가에 실패하였습니다."),
@@ -22,7 +24,10 @@ public enum ErrorCode {
 
     USERSIGNUP_FAILED(400,"회원가입에 실패하였습니다."),
     MENU_LIST_FETCH_FAILED(400,"메뉴 리스트 데이터를 가져오는 중에 실패하였습니다."),
-    MENU_DELETE_FAILED(400,"메뉴 삭제에 실패하였습니다.");
+    MENU_DELETE_FAILED(400,"메뉴 삭제에 실패하였습니다."),
+
+    UNKNOWN_VALUE(400,"알 수 없는 값입니다.");
+
 
 
 

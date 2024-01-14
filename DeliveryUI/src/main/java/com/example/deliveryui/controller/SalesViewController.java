@@ -1,6 +1,8 @@
 package com.example.deliveryui.controller;
 
 import com.example.core.dto.SalesDto;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 @Controller
@@ -23,14 +26,23 @@ public class SalesViewController {
         return "html/sales_form";
     }
 
-    @RequestMapping(value = "/date", method = RequestMethod.POST)
-    public ResponseEntity<Object> getSalesByDate(@RequestBody SalesDto salesDTO, @Value("${api.url}") String url) {
+    @RequestMapping(value = "/date", method = RequestMethod.GET)
+    public ResponseEntity<Object> getSalesByDate(@RequestParam Long loginId, @RequestParam String userType, @RequestParam  LocalDate startDate, @RequestParam LocalDate endDate, @Value("${api.url}") String url) {
         try {
-            ResponseEntity<Object> salesByDate = restTemplate.postForEntity(url + "/sales/date", salesDTO, Object.class);
-            return salesByDate;
+            return restTemplate.getForEntity(url + "/sales/date?loginId=" + loginId + "&userType="+userType + "&startDate="+ startDate+"&endDate="+endDate, Object.class);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Collections.singletonMap("error", "매출 확인에 실패했습니다." + e.getMessage()));
+            return ResponseEntity.badRequest()
+                    .body(Collections.singletonMap("error", "매출 확인에 실패했습니다." + e.getMessage()));
         }
+    }
 
+    @RequestMapping(value = "/time", method = RequestMethod.GET)
+    public ResponseEntity<Object> getSalesByTime(@RequestParam Long loginId, @RequestParam LocalDate Date , @RequestParam String timeType, @Value("${api.url}") String url) {
+        try {
+            return restTemplate.getForEntity(url + "/sales/time?loginId=" + loginId + "&Date=" + Date + "&timeType=" + timeType, Object.class);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(Collections.singletonMap("error", "매출 확인에 실패했습니다." + e.getMessage()));
+        }
     }
 }

@@ -1,50 +1,54 @@
 function saleMonth() {
-    var isStore = document.getElementById('isStore').checked;
-    var isUser = document.getElementById('isUser').checked;
-    var startDate = document.getElementById('startDate').value;
-    var endDate = document.getElementById('endDate').value;
+    var userType;
+    var loginId = sessionStorage.getItem("loginId");
+    var startDate = $('#startDate').val();
+    var endDate = $('#endDate').val();
 
-    var date = {
-        isStore : isStore,
-        isUser : isUser,
-        startDate : startDate,
-        endDate : endDate,
-        loginId: parseInt(document.getElementById('loginId').value),
+    if($('#isStore').prop('checked')) {
+        userType = 'store';
+    } else if($('#isUser').prop('checked')) {
+        userType = 'user';
+    } else {
+        alert('시간을 선택해주세요.');
+        return false;
     }
 
-    fetch('/sales/date', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
+    $.ajax({
+        url: "/sales/date",
+        method: "GET",
+        data: {
+            loginId: loginId,
+            userType: userType,
+            startDate: startDate,
+            endDate: endDate
         },
-        body: JSON.stringify(date),
+        success: function (data) {
+            displaySalesDateData(data);
+        },
+        error: function (error) {
+            console.log(error);
+            const salesDateDisplay = $('#salesDateDisplay');
+            salesDateDisplay.empty();
+            salesDateDisplay.html(error);
+        }
     })
-        .then(response => {
-            if(response.ok) {
-                return response.json().then(data => {
-                    const salesDisplayElement = document.getElementById('salesDisplay');
-                    const salesTotal = data.salesTotal;
-                    const startDateText = getMonthText(date.startDate);
-                    const endDateText  = (date.startDate !== date.endDate) ? getMonthText(date.endDate) : '';
 
-                    salesDisplayElement.innerHTML = `${startDateText} ~ ${endDateText} 매출 금액 : ${salesTotal}원`;
-                });
-            } else {
-                response.json().then(data => {
-                    const salesDisplayElement = document.getElementById('salesDisplay');
-                    const errorMessage = data.error;
-                    salesDisplayElement.innerHTML = errorMessage;
-                    console.error(errorMessage);
-                    throw new Error(errorMessage);
-                });
-            }
-        })
-        .catch(error => {
-            console.error(error.message);
-        });
-
-    // 폼이 제출되면 페이지가 새로고침되는 것을 방지
     return false;
+}
+
+function displaySalesDateData(data) {
+    const salesDateDisplay = $('#salesDateDisplay');
+    salesDateDisplay.empty();
+
+    if(data.length === 0) {
+        salesDateDisplay.html("<p>No sales found.</p>");
+        return false;
+    } else {
+        var startDate = getMonthText($('#startDate').val());
+        var endDate = getMonthText($('#endDate').val());
+        salesDateDisplay.html(`${startDate} ~ ${endDate} 매출 금액 : ${data.salesTotal}원`);
+    }
+
 }
 
 function getMonthText(dateString) {

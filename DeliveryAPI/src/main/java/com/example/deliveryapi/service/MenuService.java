@@ -15,8 +15,6 @@ import com.example.deliveryapi.model.MenuRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,9 +24,6 @@ public class MenuService {
     private final MenuRepository menuRepository;
     private final UserLoginService userLoginService;
     private final UserSignupService userSignupService;
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
 
     @Transactional
     public void addMenu(MenuDto menuDto) {
@@ -73,7 +68,7 @@ public class MenuService {
             List<MenuAddDataEntity> menus = login.getUser().getMenus();
             for (MenuAddDataEntity menu : menus) {
                 if (menu.getMenuName().equals(menuName)) {
-                    menuRepository.delete(menu);
+                    menuRepository.deleteById(menu.getMenuId());
                 }
             }
         } catch (Exception e) {
