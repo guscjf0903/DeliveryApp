@@ -1,6 +1,6 @@
 package com.example.deliveryapi.service;
 
-import static com.example.deliveryapi.exception.ErrorCode.MENU_ADD_FAILED;
+import static com.example.deliveryapi.exception.ErrorCode.MENU_ALLLIST_FETCH_FAILED;
 import static com.example.deliveryapi.exception.ErrorCode.MENU_DELETE_FAILED;
 import static com.example.deliveryapi.exception.ErrorCode.MENU_LIST_FETCH_FAILED;
 
@@ -12,6 +12,8 @@ import com.example.deliveryapi.entity.UserSignupDataEntity;
 import com.example.deliveryapi.exception.CustomException;
 import com.example.deliveryapi.model.MenuRepository;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -27,13 +29,9 @@ public class MenuService {
 
     @Transactional
     public void addMenu(MenuDto menuDto) {
-        try {
-            LoginDataEntity login = userLoginService.validateLoginId(menuDto.getLoginId());
-            userSignupService.checkStorePermission(login);
-            saveMenu(menuDto, login.getUser());
-        } catch (Exception e) {
-            throw new CustomException(MENU_ADD_FAILED);
-        }
+        LoginDataEntity login = userLoginService.validateLoginId(menuDto.getLoginId());
+        userSignupService.checkStorePermission(login);
+        saveMenu(menuDto, login.getUser());
     }
 
 
@@ -68,11 +66,34 @@ public class MenuService {
             List<MenuAddDataEntity> menus = login.getUser().getMenus();
             for (MenuAddDataEntity menu : menus) {
                 if (menu.getMenuName().equals(menuName)) {
-                    menuRepository.deleteById(menu.getMenuId());
+                    menuRepository.delete(menu);
                 }
             }
         } catch (Exception e) {
             throw new CustomException(MENU_DELETE_FAILED);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public HashMap<String, List<MenuData>> getAllMenuData() {
+        try {
+
+            List<MenuAddDataEntity> menus = menuRepository.findAll();
+            HashMap<String, List<MenuData>> menuDataList = new HashMap<>(); //key : companyName, value : menuDataList
+            for (MenuAddDataEntity menu : menus) {
+                MenuData menuData = new MenuData(menu.getMenuName(), menu.getMenuPrice());
+
+                if (menuDataList.containsKey(menu.getUser().getCompanyName())) {
+                    menuDataList.get(menu.getUser().getCompanyName()).add(menuData);
+                } else {
+                    List<MenuData> menuDataListForCompany = new ArrayList<>();
+                    menuDataListForCompany.add(menuData);
+                    menuDataList.put(menu.getUser().getCompanyName(), menuDataListForCompany);                }
+            }
+
+            return menuDataList;
+        } catch (Exception e) {
+            throw new CustomException(MENU_ALLLIST_FETCH_FAILED);
         }
     }
 

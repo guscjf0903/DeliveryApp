@@ -24,8 +24,10 @@
 </form>
 <hr>
 <form id = "salesTimeForm" onsubmit="return saleTime()">
-    <label> 확인하고 싶은 날짜를 선택해주세요 </label><br>
-    <input type="date" id="fixDate" name="fixDate" required><br><br>
+    <label> 시작 날짜를 선택해주세요 </label><br>
+    <input type="date" id="timeStartDate" name="timeStartDate" required><br><br>
+    <label> 끝 날짜를 선택해주세요 </label><br>
+    <input type="date" id="timeEndDate" name="timeEndDate" required><br><br>
     <label> 확인하고 싶은 시간대를 선택해주세요 </label><br>
     <input type="radio" id="lunch" name="isType" required>점심(오전10시 ~ 오후2시)<br>
     <input type="radio" id="dinner" name="isType" required>저녁(오후4시 ~ 오후8시)<br><br>

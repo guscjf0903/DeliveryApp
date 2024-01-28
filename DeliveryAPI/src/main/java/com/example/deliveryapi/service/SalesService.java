@@ -1,16 +1,16 @@
 package com.example.deliveryapi.service;
 
-import static com.example.deliveryapi.exception.ErrorCode.TOTALSALETIME_FETCH_FAILED;
-import static com.example.deliveryapi.exception.ErrorCode.TOTALSALE_FETCH_FAILED;
+import static com.example.deliveryapi.exception.ErrorCode.TIME_FAILED;
 import static com.example.deliveryapi.exception.ErrorCode.UNAUTHORIZED_ACCESS;
 import static com.example.deliveryapi.exception.ErrorCode.UNKNOWN_VALUE;
 
-import com.example.core.dto.SalesDto;
 import com.example.deliveryapi.entity.LoginDataEntity;
 import com.example.deliveryapi.entity.OrderDataEntity;
 import com.example.deliveryapi.enums.TimeType;
 import com.example.deliveryapi.enums.UserType;
 import com.example.deliveryapi.exception.CustomException;
+import com.example.deliveryapi.model.OrderCriteriaRepository;
+import com.example.deliveryapi.model.OrderDSLRepositoryImpl;
 import com.example.deliveryapi.model.OrderRepository;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -26,6 +26,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class SalesService {
     private final UserLoginService userLoginService;
     private final OrderRepository orderRepository;
+    private final OrderDSLRepositoryImpl orderDSLRepositoryImpl;
+    private final OrderCriteriaRepository orderCriteriaRepository;
+
 
     @Transactional(readOnly = true)
     public BigDecimal getSalesByDate(long userId, String userTypeString, LocalDate startDate, LocalDate endDate) {
@@ -47,8 +50,12 @@ public class SalesService {
         if (userType.equals(UserType.USER)) {
             LocalDateTime start = startDate.atStartOfDay();;
             LocalDateTime end = endDate.atTime(LocalTime.MAX);
-            List<OrderDataEntity> sales = orderRepository.findByUserUserIdAndOrderDatetimeBetween(userId, start,
-                    end);
+//            List<OrderDataEntity> sales = orderRepository.findByUserUserIdAndOrderDatetimeBetween(userId, start,
+//                    end); // orderRepository를 사용 할 경우
+//            List<OrderDataEntity> sales = orderDSLRepositoryImpl.findByUserOrderDatetimeBetween(userId, start,
+//                    end); // orderDSLRepositoryImpl를 사용 할 경우
+            List<OrderDataEntity> sales = orderCriteriaRepository.findByUserOrderDatetimeBetween(userId, start,
+                    end); // orderCriteriaRepository를 사용 할 경우
             for (OrderDataEntity sale : sales) {
                 saleTotal = saleTotal.add(sale.getTotalPrice());
             }
@@ -56,46 +63,47 @@ public class SalesService {
         } else if (userType.equals(UserType.STORE)) {
             LocalDateTime start = startDate.atStartOfDay();;
             LocalDateTime end = endDate.atTime(LocalTime.MAX);
-            List<OrderDataEntity> sales = orderRepository.findByStoreUserIdAndOrderDatetimeBetween(userId, start,
-                    end);
+//            List<OrderDataEntity> sales = orderDSLRepositoryImpl.findByStoreOrderDatetimeBetween(userId, start,
+//                    end); // orderDSLRepositoryImpl를 사용 할 경우
+//            List<OrderDataEntity> sales = orderRepository.findByStoreUserIdAndOrderDatetimeBetween(userId, start,
+//                    end); // orderRepository를 사용 할 경우
+            List<OrderDataEntity> sales = orderCriteriaRepository.findByStoreOrderDatetimeBetween(userId, start,
+                    end); // orderCriteriaRepository를 사용 할 경우
             for (OrderDataEntity sale : sales) {
                 saleTotal = saleTotal.add(sale.getTotalPrice());
             }
             return saleTotal;
         } else {
-            throw new CustomException(TOTALSALE_FETCH_FAILED);
+            throw new CustomException(UNAUTHORIZED_ACCESS);
         }
     }
 
-    public BigDecimal getSalesByTime(Long loginId, LocalDate date, String apiTimeType) {
+    @Transactional(readOnly = true)
+    public BigDecimal getSalesByTime(Long loginId, LocalDate startDate, LocalDate endDate, String apiTimeType) {
         LoginDataEntity login = userLoginService.validateLoginId(loginId);
         TimeType timeType = convertToMealType(apiTimeType);
 
-        BigDecimal saleTotal = BigDecimal.valueOf(0);
-        if(timeType.equals(TimeType.LUNCH)) {
-            LocalDateTime start = LocalDateTime.of(date, LocalTime.of(10, 0, 0));
-            LocalDateTime end = LocalDateTime.of(date, LocalTime.of(14, 0, 0));
+        BigDecimal sales = null;
 
-            List<OrderDataEntity> sales = orderRepository.findSaleByTime(login.getUser().getUserId(), start, end);
-            for (OrderDataEntity sale : sales) {
-                saleTotal = saleTotal.add(sale.getTotalPrice());
-            }
-            System.out.println(saleTotal);
-            return saleTotal;
-        } else if(timeType.equals(TimeType.DINNER)) {
-            LocalDateTime start = LocalDateTime.of(date, LocalTime.of(16, 0, 0));
-            LocalDateTime end = LocalDateTime.of(date, LocalTime.of(20, 0, 0));
+        if (timeType.equals(TimeType.LUNCH)) {
+            LocalDateTime startDateAndTime = LocalDateTime.of(startDate, LocalTime.of(10, 0, 0));
+            LocalDateTime endDateAndTime = LocalDateTime.of(endDate, LocalTime.of(14, 0, 0));
 
-            List<OrderDataEntity> sales = orderRepository.findSaleByTime(login.getUser().getUserId(), start, end);
-            for (OrderDataEntity sale : sales) {
-                saleTotal = saleTotal.add(sale.getTotalPrice());
-            }
+            //sales = orderRepository.findSaleByTime(login.getUser().getUserId(), startDateAndTime, endDateAndTime);// orderRepository를 사용 할 경우
+            sales = orderDSLRepositoryImpl.findSaleByTime(login.getUser().getUserId(), startDateAndTime, endDateAndTime);// orderDSLRepositoryImpl를 사용 할 경우
+            //sales = orderCriteriaRepository.findSaleByTime(login.getUser().getUserId(), startDateAndTime, endDateAndTime);// orderCriteriaRepository를 사용 할 경우
+        } else if (timeType.equals(TimeType.DINNER)) {
+            LocalDateTime startDateAndTime = LocalDateTime.of(startDate, LocalTime.of(16, 0, 0));
+            LocalDateTime endDateAndTime = LocalDateTime.of(endDate, LocalTime.of(20, 0, 0));
 
-            System.out.println(saleTotal);
-            return saleTotal;
+            //sales = orderRepository.findSaleByTime(login.getUser().getUserId(), startDateAndTime, endDateAndTime);// orderRepository를 사용 할 경우
+            sales = orderDSLRepositoryImpl.findSaleByTime(login.getUser().getUserId(), startDateAndTime, endDateAndTime);// orderDSLRepositoryImpl를 사용 할 경우
+            //sales = orderCriteriaRepository.findSaleByTime(login.getUser().getUserId(), startDateAndTime, endDateAndTime);// orderCriteriaRepository를 사용 할 경우
         } else {
-            throw new CustomException(TOTALSALETIME_FETCH_FAILED);
+            throw new CustomException(TIME_FAILED);
         }
+
+        return sales == null ? BigDecimal.ZERO : sales;
     }
 
     public static TimeType convertToMealType(String timeType) {

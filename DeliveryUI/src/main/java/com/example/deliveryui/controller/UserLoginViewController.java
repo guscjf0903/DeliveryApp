@@ -24,7 +24,7 @@ public class UserLoginViewController {
 
     @GetMapping("/login")
     public String showLoginForm() {
-        return "html/login_form";
+        return "login_form";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)

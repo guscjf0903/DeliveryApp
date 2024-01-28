@@ -1,7 +1,13 @@
 function saleTime() {
     var timeType;
     var loginId = sessionStorage.getItem("loginId");
-    var Date = $('#fixDate').val();
+    if (!loginId) {
+        alert("로그인을 해주세요.");
+        window.location.href = '/user/login';
+    }
+    var startDate = $('#timeStartDate').val();
+    var endDate = $('#timeEndDate').val();
+
 
     if ($('#lunch').prop('checked')) {
         timeType = 'lunch';
@@ -18,7 +24,8 @@ function saleTime() {
         data: {
             loginId: loginId,
             timeType: timeType,
-            Date: Date
+            startDate: startDate,
+            endDate: endDate
         },
         success: function (data) {
             displaySalesTimeData(data);
@@ -39,12 +46,13 @@ function displaySalesTimeData(data) {
         timeType = '저녁';
     }
 
-    if (data.length === 0) {
+    if (data.salesTotal == null) {
         salesTimeDisplay.html("<p>No sales found.</p>");
         return false;
     } else {
-        var salestime = getMonthText($('#fixDate').val());
-        salesTimeDisplay.html(`${salestime} ${timeType} 매출 금액 : ${data.salesTotal}원`);
+        var salesStartTime = getMonthText($('#timeStartDate').val());
+        var salesEndTime = getMonthText($('#timeEndDate').val());
+        salesTimeDisplay.html(`${salesStartTime} ~ ${salesEndTime} ${timeType} 매출 금액 : ${data.salesTotal}원`);
     }
 }
 

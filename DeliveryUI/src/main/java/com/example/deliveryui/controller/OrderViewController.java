@@ -20,7 +20,7 @@ public class OrderViewController {
 
     @GetMapping("/add")
     public String showOrderForm() {
-        return "html/html_order";
+        return "html_order";
     }
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<String> addOrder(@RequestBody @Valid OrderDto orderDTO, @Value("${api.url}") String url) {

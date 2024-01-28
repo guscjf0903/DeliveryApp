@@ -19,7 +19,7 @@ public class UserSignupViewController {
     private final RestTemplate restTemplate = new RestTemplate();
     @GetMapping("/signup")
     public String showSignUpForm() {
-        return "html/signup_form";
+        return "signup_form";
     }
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity<String> registerUser(@RequestBody @Valid SignupDto signupDTO, @Value("${api.url}") String url) {

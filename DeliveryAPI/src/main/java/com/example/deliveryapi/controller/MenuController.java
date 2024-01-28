@@ -1,8 +1,10 @@
 package com.example.deliveryapi.controller;
 
+import com.example.core.dto.MenuData;
 import com.example.core.dto.MenuDto;
 import com.example.deliveryapi.service.MenuService;
 import jakarta.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +48,17 @@ public class MenuController {
         try {
             menuService.deleteMenu(loginId, menuName);
             return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/getAllMenuData")
+    public ResponseEntity<?> getAllMenuData() {
+        try {
+            HashMap<String, List<MenuData>> menuData = menuService.getAllMenuData();
+            return ResponseEntity.ok(menuData);
+
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

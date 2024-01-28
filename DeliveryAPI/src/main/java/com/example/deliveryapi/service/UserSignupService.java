@@ -27,6 +27,8 @@ public class UserSignupService {
             throw new CustomException(USERSIGNUP_FAILED);
         }
     }
+
+    @Transactional(readOnly = true)
     public void checkStorePermission(LoginDataEntity login) {
         if (!login.getUser().getStore()) {
             throw new CustomException(NOT_FOUND_USERORSTORE_TOKEN);
@@ -35,6 +37,7 @@ public class UserSignupService {
 
     public void checkUserPermission(LoginDataEntity login) {
         if (!login.getUser().getUser()) {
+            System.out.println("User 체크 테스트.");
             throw new CustomException(NOT_FOUND_USERORSTORE_TOKEN);
         }
     }

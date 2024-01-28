@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface LoginRepository extends JpaRepository<LoginDataEntity, Long> {
     boolean existsByUserUserId(long loginId);
 
-    void deleteByuserUserId(long loginId);
+    void deleteByUserUserId(long loginId);
 }

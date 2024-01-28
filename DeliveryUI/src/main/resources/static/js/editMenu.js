@@ -19,7 +19,7 @@ function getMenuData() {
 }
 
 function displayMenuData(menuData) {
-    var menuList = $("#menuList");
+    var menuList = $("#editMenuList");
     menuList.empty();
 
     var selectedMenu = $("#selectedMenu");

@@ -7,7 +7,7 @@ import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
-@EntityScan(basePackages = "com.example.deliveryapi.entity")
+@EntityScan(basePackages = "com.example.deliveryapi")
 @EnableJdbcRepositories(basePackages = "com.example.deliveryapi.model")
 @EnableJpaAuditing
 public class ApiApplication {

@@ -7,7 +7,11 @@
 
 </head>
 <body>
+
 <form id="orderForm" onsubmit="return sendOrder()">
+    <div id = "allMenuList"></div>
+
+
     <label for="storeName">가게 이름:</label>
     <input type="text" id="storeName" required><br>
 
@@ -19,8 +23,10 @@
     <input type="submit" value="주문하기">
     <button type="button" onclick="addMenuField()">메뉴 추가</button><br>
 
+    <script   src="https://code.jquery.com/jquery-3.7.1.min.js"   integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="   crossorigin="anonymous"></script>
     <script src = "/js/send_loginId.js"></script>
     <script src = "/js/orderMenu.js"></script>
+    <script src="/js/allMenuData.js"></script>
 
 </form>
 </body>

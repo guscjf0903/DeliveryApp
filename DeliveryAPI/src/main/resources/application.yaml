@@ -2,11 +2,22 @@ server:
   port: 7777
 ---
 spring:
+  devtools:
+    livereload:
+      enabled: false
+  jpa:
+    properties:
+      hibernate:
+    open-in-view: false
+
   profiles:
     group:
       local:
         - db-local
+        - openinview-local
       dev:
         - db-dev
+        - openinview-dev
     include:
       - db
+

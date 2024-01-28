@@ -32,8 +32,8 @@ public class SalesController {
     }
 
     @GetMapping("/time")
-    public ResponseEntity<?> getSalesByTime(@RequestParam Long loginId, @RequestParam LocalDate Date , @RequestParam String timeType) {
-        BigDecimal salesTotal = salesService.getSalesByTime(loginId, Date, timeType);
+    public ResponseEntity<?> getSalesByTime(@RequestParam Long loginId, @RequestParam LocalDate startDate,@RequestParam LocalDate endDate, @RequestParam String timeType) {
+        BigDecimal salesTotal = salesService.getSalesByTime(loginId, startDate, endDate, timeType);
         return ResponseEntity.ok().body(Collections.singletonMap("salesTotal", salesTotal));
     }
 }

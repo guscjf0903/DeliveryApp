@@ -2,6 +2,7 @@ package com.example.deliveryui.controller;
 
 import com.example.core.dto.MenuDto;
 import jakarta.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -22,9 +23,9 @@ import org.springframework.web.client.RestTemplate;
 public class UserMenuViewController {
     private final RestTemplate restTemplate = new RestTemplate();
 
-    @GetMapping("/add")
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String showMenuForm() {
-        return "/html/add-menu";
+        return "add-menu";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -34,9 +35,9 @@ public class UserMenuViewController {
         return menuAddHttpStatus;
     }
 
-    @GetMapping("/edit")
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String showEditMenuForm() {
-        return "/html/edit-menu";
+        return "edit-menu";
     }
 
     @RequestMapping(value = "/getMenuData", method = RequestMethod.GET)
@@ -50,6 +51,13 @@ public class UserMenuViewController {
     @DeleteMapping(value = "/deleteMenu")
     public ResponseEntity<String> deleteMenu(@RequestParam Long loginId, @RequestParam String menuName,@Value("${api.url}") String url) {
         ResponseEntity<String> menuAddHttpStatus = restTemplate.exchange(url + "/menu/deleteMenu?loginId=" + loginId + "&menuName=" + menuName, HttpMethod.DELETE, null, String.class);
+        return menuAddHttpStatus;
+    }
+
+    @GetMapping("/getAllMenuData")
+    public ResponseEntity<?> getAllMenuData(@Value("${api.url}") String url) {
+        ResponseEntity<?> menuAddHttpStatus = restTemplate.getForEntity( url + "/menu/getAllMenuData", HashMap.class);
+
         return menuAddHttpStatus;
     }
 
