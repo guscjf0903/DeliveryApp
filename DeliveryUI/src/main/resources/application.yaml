@@ -9,7 +9,6 @@ spring:
       default: profile1
       mac: profile1
       linux: profile2
-      docker: profile3
 
 ---
 spring:
@@ -30,11 +29,3 @@ spring:
 api:
   url: http://172.16.72.130:7777
 
----
-spring:
-  config:
-    activate:
-      on-profile: profile3
-
-api:
-  url: http://172.16.72.131:7777
