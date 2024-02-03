@@ -7,7 +7,7 @@ plugins {
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-
+//테[스트
 java {
     sourceCompatibility = '17'
 }
