@@ -15,7 +15,7 @@ java {
 bootJar {
     enabled = false
 }
-
+//xptmxm
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
