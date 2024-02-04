@@ -86,11 +86,13 @@ pipeline {
         stage('Push Docker UI') {
             steps {
                 echo 'Push Docker UI'
-                script {
-                    docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
-                        dockerImageUI.push()
+                dir ('DeliveryUI') {
+                    script {
+                        docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
+                            dockerImageUI.push()
+                        }
+                        dockerImageUI.remove()
                     }
-                    dockerImageUI.remove()
                 }
             }
             post {
@@ -103,11 +105,13 @@ pipeline {
         stage('Push Docker API') {
             steps {
                 echo 'Push Docker API'
-                script {
-                    docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
-                        dockerImageAPI.push()
+                dir ('DeliveryAPI') {
+                    script {
+                        docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
+                            dockerImageAPI.push()
+                        }
+                        dockerImageAPI.remove()
                     }
-                    dockerImageAPI.remove()
                 }
             }
             post {
@@ -115,6 +119,6 @@ pipeline {
                     error 'This pipeline stops here...'
                 }
             }
-        }
+
     }
 }
