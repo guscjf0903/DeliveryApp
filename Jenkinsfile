@@ -77,6 +77,7 @@ pipeline {
                     docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
                         dockerImageUI.push()
                     }
+                    dockerImageUI.remove()
                 }
             }
             post {
@@ -93,6 +94,7 @@ pipeline {
                     docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
                         dockerImageAPI.push()
                     }
+                    dockerImageAPI.remove()
                 }
             }
             post {
