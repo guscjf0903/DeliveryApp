@@ -24,7 +24,7 @@ pipeline {
         stage('Build gradle') {
             steps {
                 script {
-                    sh './gradlew build'
+                    sh './gradlew clean build'
                 }
             }
             post {
@@ -37,11 +37,18 @@ pipeline {
                 }
             }
         }
+        stage('Debug') {
+            steps {
+                echo 'Current Working Directory:'
+                sh 'pwd'
+            }
+        }
 
         stage('Build Docker UI') {
+
             steps {
                 echo 'Build Docker UI'
-                dir ('DeliveryUI') {
+                dir ('/Users/hyunchuljung/Desktop/Intellij/BaedalMinjokDB/DeliveryUI') {
                     script {
                         dockerImageUI = docker.build("${repository}:UI")
                     }
