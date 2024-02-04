@@ -45,7 +45,6 @@ pipeline {
         }
 
         stage('Build Docker UI') {
-
             steps {
                 echo 'Build Docker UI'
                 dir ('/Users/hyunchuljung/Desktop/Intellij/BaedalMinjokDB/DeliveryUI') {
@@ -59,6 +58,13 @@ pipeline {
                     error 'This pipeline stops here...'
                 }
             }
+        }
+
+        stage('Debug After Build Docker UI') {
+                steps {
+                    echo 'Current Working Directory:'
+                    sh 'pwd'
+                }
         }
 
         stage('Build Docker API') {
