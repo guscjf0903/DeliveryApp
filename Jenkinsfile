@@ -10,7 +10,8 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Clonning Repository'
-                git url: 'https://github.com/guscjf0903/DeliveryApp',
+                git credentialsId: 'git_token',
+                    url: 'https://github.com/guscjf0903/DeliveryApp',
                     branch: 'origin/salesRefactor'
             }
 
