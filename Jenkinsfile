@@ -47,7 +47,7 @@ pipeline {
         stage('Build Docker UI') {
             steps {
                 echo 'Build Docker UI'
-                dir ('/Users/hyunchuljung/Desktop/Intellij/BaedalMinjokDB/DeliveryUI') {
+                dir ('DeliveryUI') {
                     script {
                         dockerImageUI = docker.build("${repository}:UI")
                     }
