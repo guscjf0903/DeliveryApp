@@ -9,8 +9,11 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                echo 'Clonning Repository'
+                git url: 'https://github.com/guscjf0903/DeliveryApp',
+                    branch: 'origin/salesRefactor'
             }
+
             post {
                 success {
                     echo 'Successfully Cloned Repository'
