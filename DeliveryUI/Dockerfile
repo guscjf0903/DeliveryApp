@@ -1,5 +1,5 @@
 FROM openjdk:17-jdk
-WORKDIR /workspace/DeliveryUI
+WORKDIR ./DeliveryUI
 
 COPY ./DeliveryUI/build/libs/DeliveryUI-0.0.1-SNAPSHOT.jar ./ui.jar
 EXPOSE 8888
