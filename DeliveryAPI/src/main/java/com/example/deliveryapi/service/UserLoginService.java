@@ -1,5 +1,6 @@
 package com.example.deliveryapi.service;
 
+import static com.example.deliveryapi.exception.ErrorCode.NOTFOUND_USER;
 import static com.example.deliveryapi.exception.ErrorCode.NOT_FOUND_LOGINID;
 import static com.example.deliveryapi.exception.ErrorCode.PASSWORD_DISMATCH;
 
@@ -28,7 +29,6 @@ public class UserLoginService {
     public Optional<LoginResponse> loginSuccessGenerateToken(LoginDto loginDTO) {
         UserSignupDataEntity user = validatePasswordAndGetUserData(loginDTO.getUserName(), loginDTO.getPassword());
 
-
         LoginDataEntity login = LoginDataEntity.of(user);
         if(loginRepository.existsByUserUserId(login.getUser().getUserId())) { // userId가 존재하면 삭제
             loginRepository.deleteByUserUserId(login.getUser().getUserId());
@@ -41,6 +41,9 @@ public class UserLoginService {
 
     private UserSignupDataEntity validatePasswordAndGetUserData(String userName, String password) {
         UserSignupDataEntity userSignupData = userRepository.findByUserName(userName);
+        if(userSignupData == null) {
+            throw new CustomException(NOTFOUND_USER);
+        }
         if (!userSignupData.getPassword().equals(password)) {
             throw new CustomException(PASSWORD_DISMATCH);
         }

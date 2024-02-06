@@ -9,10 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Clonning Repository'
-                git credentialsId: 'git_token',
-                    url: 'https://github.com/guscjf0903/DeliveryApp',
-                    branch: 'origin/salesRefactor'
+                checkout scm
             }
 
             post {

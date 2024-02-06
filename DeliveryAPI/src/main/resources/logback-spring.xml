@@ -1,7 +1,9 @@
 <configuration>
     <timestamp key="BY_DATE" datePattern="yyyy-MM-dd"/>
+    <conversionRule conversionWord="mdc" converterClass="org.slf4j.helpers.MDCInsertingServletFilter" />
+
     <property name="LOG_PATTERN"
-              value="[%d{yyyy-MM-dd HH:mm:ss}:%-4relative] %green([%thread]) %highlight(%-5level) %boldWhite([%C.%M:%yellow(%L)]) - %msg%n"/>
+              value="[%d{yyyy-MM-dd HH:mm:ss}:%-4relative] %green([%thread]) %highlight(%-5level) %boldWhite([%C.%M:%yellow(%L)]) - %msg %X{requestId}%n"/>
 
     <springProfile name="local">
         <include resource="console.appender.xml"/>

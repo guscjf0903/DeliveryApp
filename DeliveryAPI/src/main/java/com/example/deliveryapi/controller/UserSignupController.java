@@ -23,11 +23,7 @@ public class UserSignupController {
 
     @PostMapping("/signup")
     public ResponseEntity<String> registerUser(@RequestBody SignupDto signupDTO) {
-        try {
-            userSignupService.registerUser(signupDTO);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+        userSignupService.registerUser(signupDTO);
+        return ResponseEntity.ok().build();
     }
 }

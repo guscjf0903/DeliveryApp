@@ -18,11 +18,7 @@ public class OrderController {
 
     @PostMapping("/add")
     public ResponseEntity<String> addOrder(@RequestBody OrderDto orderDTO) {
-        try {
-            orderService.addOrder(orderDTO);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+        orderService.addOrder(orderDTO);
+        return ResponseEntity.ok().build();
     }
 }
